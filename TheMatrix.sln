@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheMatrix", "TheMatrix\TheMatrix.csproj", "{D1C82BD7-8AA3-48DE-93CA-924DE46ACE19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixCalculatorService", "MatrixCalculatorService\MatrixCalculatorService.csproj", "{72C664D8-B51B-41B1-8803-185AAEC6479C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D1C82BD7-8AA3-48DE-93CA-924DE46ACE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1C82BD7-8AA3-48DE-93CA-924DE46ACE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1C82BD7-8AA3-48DE-93CA-924DE46ACE19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C664D8-B51B-41B1-8803-185AAEC6479C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C664D8-B51B-41B1-8803-185AAEC6479C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C664D8-B51B-41B1-8803-185AAEC6479C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C664D8-B51B-41B1-8803-185AAEC6479C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

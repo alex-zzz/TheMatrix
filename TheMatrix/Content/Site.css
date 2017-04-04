@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Custom */
+
+#gbox_jqGridLeft, #gbox_jqGridRight, #gbox_jqGridResult {
+    padding: 2px;
+}
+
+.jqgfirstrow {
+    display: none !important;
+}

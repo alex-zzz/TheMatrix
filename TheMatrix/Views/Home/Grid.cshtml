@@ -1,41 +1,195 @@
-﻿@{
-    Layout = null;
-}
+﻿<h2></h2>
+<div class="row">
+    <div class="col-md-5">
+        <h3>Matrix A</h3>
+        <div id="jqGridLeft_container">
+            <table id="jqGridLeft"></table>
+        </div>
+    </div>
+    <div class="col-md-2 text-center">
+        <h3>&nbsp;</h3>
+        <p>
+            <button type="button" class="btn btn-primary btn-block"><strong>+</strong></button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-primary btn-block"><strong>-</strong></button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-primary btn-block"><strong>*</strong></button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-primary btn-block"><strong>/</strong></button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-default btn-block">
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-default btn-block">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            </button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-default btn-block">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </button>
+        </p>
+    </div>
+    <div class="col-md-5">
+        <h3>Matrix B</h3>
+        <div id="jqGridRight_container">
+            <table id="jqGridRight"></table>
+        </div>
+    </div>
+</div>
 
-<html>
-<head>
-    <title>jqGrid</title>
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <h3>Result Matrix</h3>
+        <div id="jqGridResult_container">
+            <table id="jqGridResult"></table>
+        </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
-    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/jquery-ui-1.10.0.min.js"></script>
-    @*<script src="~/Scripts/jquery-ui-1.8.11.min.js" type="text/javascript"></script>*@
-    <script src="~/Scripts/jquery.jqGrid.min.js" type="text/javascript"></script>
-</head>
-<body>
-    <h2>jQGrid</h2>
-    <table id="jqg"></table>
+
+@section Scripts {
     <script type="text/javascript">
-$(document).ready(function () {
-    $("#jqg").jqGrid({
-        url: '@Url.Action("GetData")',
-        datatype: "json",
-        colNames: ['Id', 'Название', 'Автор', 'Год', 'Цена'],
-        colModel: [
-        { name: 'Id', index: 'Id', width: 30, stype: 'text' },
-        { name: 'Name', index: 'Name', width: 150, sortable: true},
-        { name: 'Author', index: 'Author', width: 150, sortable: true },
-        { name: 'Year', index: 'Year', width: 100, sortable:false },
-        { name: 'Price', index: 'Price', width: 80, align: "right", sortable: true }
-        ],
-        rowNum: 5, // число отображаемых строк
-        loadonce:true, // загрузка только один раз
-        sortname: 'Id', // сортировка по умолчанию по столбцу Id
-        sortorder: "desc", // порядок сортировки
-        caption: "Список Книг"
+    $(document).ready(function () {
+        $("#jqGridLeft").jqGrid({
+            url: '@Url.Action("GetData")',
+            datatype: "json",
+            //colNames: ['1', '2', '3'],
+            colModel: [
+                {
+                    //index: '1',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true }
+                },
+                {
+                    //index: '2',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true}
+                },
+                {
+                    //index: '3',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true }
+                },
+
+            ],
+            rowNum: 3,
+            loadonce:true, // загрузка только один раз
+            cellEdit: true,
+            cellsubmit: "clientArray",
+            height: "auto",
+            width: null,
+            shrinkToFit: false
+        });
+
+        $("#jqGridRight").jqGrid({
+            url: '@Url.Action("GetData")',
+            datatype: "json",
+            //colNames: ['1', '2', '3'],
+            colModel: [
+                {
+                    //index: '1',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true }
+                },
+                {
+                    //index: '2',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true}
+                },
+                {
+                    //index: '3',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true }
+                },
+            ],
+            rowNum: 3,
+            loadonce:true, // загрузка только один раз
+            cellEdit: true,
+            cellsubmit: "clientArray",
+            height: "auto",
+            width: null,
+            shrinkToFit: false
+        });
+
+        $("#jqGridResult").jqGrid({
+            url: '@Url.Action("GetData")',
+            datatype: "json",
+            //colNames: ['1', '2', '3'],
+            colModel: [
+                {
+                    //index: '1',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true }
+                },
+                {
+                    //index: '2',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true}
+                },
+                {
+                    //index: '3',
+                    //width: 50,
+                    editable: true,
+                    edittype: "text",
+                    editrules: { number: true }
+                },
+            ],
+            rowNum: 3,
+            loadonce:true, // загрузка только один раз
+            cellEdit: true,
+            cellsubmit: "clientArray",
+            height: "auto",
+            width: null,
+            shrinkToFit: false
+
+        });
+
+        var widthLeft = $('#jqGridLeft_container').width();
+        $('#jqGridLeft').width(widthLeft - 6);
+        var widthRight = $('#jqGridRight_container').width();
+        $('#jqGridRight').width(widthRight - 6);
+        var widthResult = $('#jqGridResult_container').width();
+        $('#jqGridResult').width(widthResult - 6);
+
+        $(window).bind('resize', function () {
+            //$('#jqGridLeft').setGridWidth(width);
+            var widthLeft = $('#jqGridLeft_container').width();
+            $('#jqGridLeft').width(widthLeft - 6);
+            var widthRight = $('#jqGridRight_container').width();
+            $('#jqGridRight').width(widthRight - 6);
+            var widthResult = $('#jqGridResult_container').width();
+            $('#jqGridResult').width(widthResult - 6);
+        });
+
+        $('.ui-jqgrid-hdiv').hide();
     });
-});
     </script>
-</body>
-</html>
+}

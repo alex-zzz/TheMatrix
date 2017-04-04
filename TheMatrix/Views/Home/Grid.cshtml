@@ -5,9 +5,56 @@
         <div id="jqGridLeft_container">
             <table id="jqGridLeft"></table>
         </div>
+        <table class="tableMatrix">
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-default btn-block">
+                        <strong>0</strong>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default btn-block">
+                        <strong>E</strong>
+                    </button>
+                </td>
+                <td>
+
+                        <label class="col-xs-3 control-label hidden-xs">Rank</label>
+                        <div class="col-md-9">
+                            <select class="form-control" >
+                                <option>2</option>
+                                <option selected>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            </div>
+                
+                        @*<input type="number" min="2" max="5" value="3">*@
+</td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="button" class="btn btn-primary btn-block"><strong>Обратить</strong></button></td>
+
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="button" class="btn btn-primary btn-block"><strong>Транспонировать</strong></button></td>
+
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="button" class="btn btn-primary btn-block"><strong>Умножить на</strong></button></td>
+                <td>
+
+                    <div class="col-sm-6">
+                        <input class="form-control" type="number">
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
-    <div class="col-md-2 text-center">
-        <h3>&nbsp;</h3>
+    <div class="col-md-2 operations">
+        <h3>Operations</h3>
         <p>
             <button type="button" class="btn btn-primary btn-block"><strong>+</strong></button>
         </p>
@@ -42,19 +89,72 @@
         <div id="jqGridRight_container">
             <table id="jqGridRight"></table>
         </div>
+        <table class="tableMatrix">
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-default btn-block">
+                        <strong>0</strong>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default btn-block">
+                        <strong>E</strong>
+                    </button>
+                </td>
+                <td>
+
+                    <label class="col-xs-3 control-label hidden-xs">Rank</label>
+                    <div class="col-md-9">
+                        <select class="form-control">
+                            <option>2</option>
+                            <option selected>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="button" class="btn btn-primary btn-block"><strong>Обратить</strong></button></td>
+
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="button" class="btn btn-primary btn-block"><strong>Транспонировать</strong></button></td>
+
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="button" class="btn btn-primary btn-block"><strong>Умножить на</strong></button></td>
+                <td>
+                <div class="col-sm-6">
+                    <input class="form-control" type="number">
+                    </div></td>
+            </tr>
+        </table>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-4">
+
     </div>
     <div class="col-md-4">
         <h3>Result Matrix</h3>
         <div id="jqGridResult_container">
             <table id="jqGridResult"></table>
         </div>
+        <button type="button" class="btn btn-default pull-left">
+            <strong>A</strong>
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default pull-right">
+            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            <strong>B</strong>
+        </button>
     </div>
     <div class="col-md-4">
+
     </div>
 </div>
 
@@ -164,7 +264,7 @@
             ],
             rowNum: 3,
             loadonce:true, // загрузка только один раз
-            cellEdit: true,
+            //cellEdit: true,
             cellsubmit: "clientArray",
             height: "auto",
             width: null,

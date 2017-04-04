@@ -14,9 +14,9 @@ namespace MatrixCalculatorService
         double[,] Divide(double[,] A, double[,] B);
 
         double[,] Transposing(double[,] A);
-        double[,] Reverse(double[,] A);
-        double[,] MultOn(double[,] A, double number);
-        double[,] DivideOn(double[,] A, double number);
+        double[,] Reverse(double[,] A, out double det);
+        double[,] MultBy(double[,] A, double number);
+        double[,] DivideBy(double[,] A, double number);
 
         double[,] GetZeroMatrix(int size);
         double[,] GetIdentityMatrix(int size);

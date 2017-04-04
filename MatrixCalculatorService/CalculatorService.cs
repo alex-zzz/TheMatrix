@@ -83,7 +83,7 @@ namespace MatrixCalculatorService
             return C;
         }
 
-        public double[,] MultOn(double[,] A, double number)
+        public double[,] MultBy(double[,] A, double number)
         {
             int size = A.Length;
             double[,] C = new double[size, size];
@@ -95,7 +95,7 @@ namespace MatrixCalculatorService
             return C;
         }
 
-        public double[,] DivideOn(double[,] A, double number)
+        public double[,] DivideBy(double[,] A, double number)
         {
             int size = A.Length;
             double[,] C = new double[size, size];

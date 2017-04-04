@@ -32,3 +32,24 @@ textarea {
 .jqgfirstrow {
     display: none !important;
 }
+
+.operations button {
+    max-width: 150px;
+}
+
+.tableMatrix {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tableMatrix td {
+    padding: 5px 5px;
+}
+
+#jqGridResult_container {
+    margin-bottom: 10px;
+}
+
+.control-label {
+    padding-top: 7px;
+}

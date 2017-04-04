@@ -8,6 +8,7 @@ namespace MatrixCalculatorService
 {
     class CalculatorService : ICalculatorService
     {
+
         //--------------------------------------------------------
         public double[,] Add(double[,] A, double[,] B)
         {
@@ -51,9 +52,7 @@ namespace MatrixCalculatorService
             int size = A.Length;
             double[,] C = new double[size, size];
 
-            for (int i = 0; i <= size; i++)
-                for (int j = 0; j <= size; j++)
-                    C[i, j] = A[i, j] + B[i, j];
+            C = Mult(A, Reverse(B));
 
             return C;
         }
@@ -62,12 +61,26 @@ namespace MatrixCalculatorService
         //--------------------------------------------------------
         public double[,] Reverse(double[,] A)
         {
-            throw new NotImplementedException();
+            int size = A.Length;
+            double[,] C = new double[size, size];
+
+            for (int i = 0; i <= size; i++)
+                for (int j = 0; j <= size; j++)
+                    C[i, j] = A[i, j];
+
+            return C;
         }
 
         public double[,] Transposing(double[,] A)
         {
-            throw new NotImplementedException();
+            int size = A.Length;
+            double[,] C = new double[size, size];
+
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    C[j, i] += A[i, j];
+
+            return C;
         }
 
         public double[,] MultOn(double[,] A, double number)
@@ -116,5 +129,6 @@ namespace MatrixCalculatorService
 
             return C;
         }
+
     }
 }

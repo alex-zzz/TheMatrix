@@ -8,6 +8,8 @@ namespace MatrixCalculatorService
 {
     interface ICalculatorService
     {
+        Matrix CreateMatrix(double[,] Array);
+
         Matrix Add(Matrix A, Matrix B);
         Matrix Subtract(Matrix A, Matrix B);
         Matrix Mult(Matrix A, Matrix B);

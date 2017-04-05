@@ -15,6 +15,11 @@ namespace MatrixCalculatorService
             return A + B;
         }
 
+        public Matrix CreateMatrix(double[,] Array)
+        {
+            return new Matrix(Array);
+        }
+
         public Matrix Divide(Matrix A, Matrix B, out double det)
         {
             det = 0;

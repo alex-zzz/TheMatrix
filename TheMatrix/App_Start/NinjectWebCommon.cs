@@ -10,6 +10,7 @@ namespace TheMatrix.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using System.Web.Mvc;
 
     public static class NinjectWebCommon 
     {
@@ -61,6 +62,7 @@ namespace TheMatrix.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            DependencyResolver.SetResolver(new TheMatrix.Utils.NinjectDependencyResolver(kernel));
         }        
     }
 }

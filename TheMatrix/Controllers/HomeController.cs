@@ -1,30 +1,35 @@
-﻿using Newtonsoft.Json;
+﻿using MatrixCalculatorService;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using TheMatrix.Models;
 
 namespace TheMatrix.Controllers
 {
     public class HomeController : Controller
     {
-        static Matrix matrix = new Matrix();
+        ICalculatorService Service;
 
         static HomeController()
+        {            
+            //matrix.MatrixArray = new double[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        }
+
+        public HomeController(ICalculatorService s)
         {
-            matrix.MatrixArray = new double[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+            Service = s;
         }
 
         public string GetData()
         {
-            var s = JsonConvert.SerializeObject(matrix.MatrixArray);
-            return s;
+            //var s = JsonConvert.SerializeObject(matrix.MatrixArray);
+            return "";
         }
 
-        public ActionResult GetMatrix(int rank)
+        public ActionResult GetMatrix(int rank, char type)
         {
 
             //StringBuilder matrixData = new StringBuilder("colModel : [");
@@ -41,52 +46,57 @@ namespace TheMatrix.Controllers
 
             //var s = matrixData.ToString();
 
-            var result = new
-            {
-                    colNames = new[]
-            {
-                    "T1","T2","T3","T4","T5"
-                },
-                    colModels = new[]
-            {
-                   new {
-                        index = "T1",
-                        name = "T1"
-                    },
-                        new {
-                        index = "T2",
-                        name = "T2"
-                    },
-                        new {
-                        index = "T3",
-                        name = "T3"
-                    },
-                        new {
-                        index = "T4",
-                        name = "T4"
-                    },
-                        new {
-                        index = "T5",
-                        name = "T5"
-                    }
-                },
-                    data = new
-                    {
-                            rows = new[] {
-                            new{T1=rank,T2=rank,T3=rank,T4=rank,T5=rank},
-                            new{T1=123,T2=321,T3=333,T4=444,T5=555},
-                            new{T1=123,T2=321,T3=333,T4=444,T5=555},
-                            new{T1=123,T2=321,T3=333,T4=444,T5=555},
-                            new{T1=123,T2=321,T3=333,T4=444,T5=555}
+            //var result = new
+            //{
+            //    colNames = new[]
+            //{
+            //        "T1","T2","T3","T4","T5"
+            //    },
+            //    colModels = new[]
+            //{
+            //       new {
+            //            index = "T1",
+            //            name = "T1"
+            //        },
+            //            new {
+            //            index = "T2",
+            //            name = "T2"
+            //        },
+            //            new {
+            //            index = "T3",
+            //            name = "T3"
+            //        },
+            //            new {
+            //            index = "T4",
+            //            name = "T4"
+            //        },
+            //            new {
+            //            index = "T5",
+            //            name = "T5"
+            //        }
+            //    },
+            //    data = new
+            //    {
+            //        rows = new[] {
+            //                new{T1=rank,T2=rank,T3=rank,T4=rank,T5=rank},
+            //                new{T1=123,T2=321,T3=333,T4=444,T5=555},
+            //                new{T1=123,T2=321,T3=333,T4=444,T5=555},
+            //                new{T1=123,T2=321,T3=333,T4=444,T5=555},
+            //                new{T1=123,T2=321,T3=333,T4=444,T5=555}
+            //            }
+            //    }
+            //};
 
-                        
-                        }
-                    }
-                
+            //var s = Json(result, JsonRequestBehavior.AllowGet);
 
-            };
+            Matrix matrix = null;
+            if (type == '1')
+            {
+                matrix = Service.GetIdentityMatrix(rank);
+            }
+            else { matrix = Service.GetZeroMatrix(rank); }
 
-            var s = Json(result, JsonRequestBehavior.AllowGet);
+            var s = Json(JsonConvert.SerializeObject(matrix.Array), JsonRequestBehavior.AllowGet);
             return s;
         }
 

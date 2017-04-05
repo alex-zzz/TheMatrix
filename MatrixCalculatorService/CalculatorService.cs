@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatrixCalculatorService
 {
-    class CalculatorService : ICalculatorService
+    public class CalculatorService : ICalculatorService
     {
         public static CalculatorService calc = new CalculatorService();
 

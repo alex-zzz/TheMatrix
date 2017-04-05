@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatrixCalculatorService
 {
-    interface ICalculatorService
+    public interface ICalculatorService
     {
         Matrix CreateMatrix(double[,] Array);
 

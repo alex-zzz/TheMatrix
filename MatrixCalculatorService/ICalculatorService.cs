@@ -8,17 +8,17 @@ namespace MatrixCalculatorService
 {
     interface ICalculatorService
     {
-        double[,] Add(double[,] A, double[,] B);
-        double[,] Subtract(double[,] A, double[,] B);
-        double[,] Mult(double[,] A, double[,] B);
-        double[,] Divide(double[,] A, double[,] B);
+        Matrix Add(Matrix A, Matrix B);
+        Matrix Subtract(Matrix A, Matrix B);
+        Matrix Mult(Matrix A, Matrix B);
+        Matrix Divide(Matrix A, Matrix B, out double det);
 
-        double[,] Transposing(double[,] A);
-        double[,] Reverse(double[,] A, out double det);
-        double[,] MultBy(double[,] A, double number);
-        double[,] DivideBy(double[,] A, double number);
+        Matrix Transposing(Matrix A);
+        Matrix Reverse(Matrix A, out double det);
+        Matrix MultBy(Matrix A, double number);
+        Matrix DivideBy(Matrix A, double number);
 
-        double[,] GetZeroMatrix(int size);
-        double[,] GetIdentityMatrix(int size);
+        Matrix GetZeroMatrix(int size);
+        Matrix GetIdentityMatrix(int size);
     }
 }

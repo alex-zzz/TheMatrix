@@ -29,7 +29,7 @@ namespace TheMatrix.Controllers
             return "";
         }
 
-        public ActionResult GetMatrix(int rank, char type)
+        public ActionResult GetMatrix(int rank)
         {
 
             //StringBuilder matrixData = new StringBuilder("colModel : [");
@@ -89,13 +89,7 @@ namespace TheMatrix.Controllers
 
             //var s = Json(result, JsonRequestBehavior.AllowGet);
 
-            Matrix matrix = null;
-            if (type == '1')
-            {
-                matrix = Service.GetIdentityMatrix(rank);
-            }
-            else { matrix = Service.GetZeroMatrix(rank); }
-
+            Matrix matrix = Service.GetIdentityMatrix(rank);
             var s = Json(JsonConvert.SerializeObject(matrix.Array), JsonRequestBehavior.AllowGet);
             return s;
         }

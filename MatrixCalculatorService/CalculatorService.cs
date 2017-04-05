@@ -8,7 +8,7 @@ namespace MatrixCalculatorService
 {
     public class CalculatorService : ICalculatorService
     {
-        public static CalculatorService calc = new CalculatorService();
+        public static MatrixCalculator calc = new MatrixCalculator();
 
         public Matrix Add(Matrix A, Matrix B)
         {
@@ -33,12 +33,12 @@ namespace MatrixCalculatorService
 
         public Matrix GetIdentityMatrix(int size)
         {
-            return calc.GetIdentityMatrix(size);
+            return new Matrix(calc.GetIdentityMatrix(size));
         }
 
         public Matrix GetZeroMatrix(int size)
         {
-            return calc.GetZeroMatrix(size);
+            return new Matrix(calc.GetZeroMatrix(size));
         }
 
         public Matrix Mult(Matrix A, Matrix B)

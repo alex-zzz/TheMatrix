@@ -122,8 +122,8 @@ namespace MatrixCalculatorService
             int size = A.GetLength(0);
             double[,] C = new double[size, size];
 
-            for (int i = 0; i <= size; i++)
-                for (int j = 0; j <= size; j++)
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
                     C[i, j] = A[i, j] * number;
 
             return C;
@@ -134,8 +134,8 @@ namespace MatrixCalculatorService
             int size = A.GetLength(0);
             double[,] C = new double[size, size];
 
-            for (int i = 0; i <= size; i++)
-                for (int j = 0; j <= size; j++)
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
                     C[i, j] = A[i, j] * 1 / number;
 
             return C;
@@ -147,8 +147,8 @@ namespace MatrixCalculatorService
         {
             double[,] C = new double[size, size];
 
-            for (int i = 0; i <= size; i++)
-                for (int j = 0; j <= size; j++)
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
                     C[i, j] = 0;
 
             return C;
@@ -158,7 +158,7 @@ namespace MatrixCalculatorService
         {
             double[,] C = new double[size, size];
 
-            for (int i = 0; i <= size; i++)
+            for (int i = 0; i < size; i++)
                 C[i, i] = 1;
 
             return C;

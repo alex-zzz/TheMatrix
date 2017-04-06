@@ -100,7 +100,7 @@ namespace MatrixCalculatorService
 
             for (int i = 0; i < size; i++)
                 for (int j = size; j < size * 2; j++)
-                    C[i, j - size] = Math.Round(B[i, j], 2);
+                    C[i, j - size] = B[i, j];
 
             return C;
         }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using TheMatrix.Utils;
 
 namespace TheMatrix.Controllers
 {
@@ -37,7 +38,7 @@ namespace TheMatrix.Controllers
         public ActionResult GetIdentityMatrix(int rank)
         {
             Matrix matrix = Service.GetIdentityMatrix(rank);
-            return GetJSon(matrix);
+            return GetJSon(matrix).Success("Ura!!!");
         }
 
         public ActionResult GetZeroMatrix(int rank)

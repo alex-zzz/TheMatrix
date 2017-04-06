@@ -79,6 +79,16 @@ $('#reverseRight').on('click', function () {
     transformMatrix(rightGrid, "ReverseMatrix")
 })
 
+$('#transposeLeft').on('click', function () {
+    //setZero(leftGrid);
+    transformMatrix(leftGrid, "TransposingMatrix")
+})
+
+$('#transposeRight').on('click', function () {
+    //setZero(rightGrid);
+    transformMatrix(rightGrid, "TransposingMatrix")
+})
+
 //function setZero(gridId) {
 
 //    for (i = 1; i <= matrixRank; i++) {

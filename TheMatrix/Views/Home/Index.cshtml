@@ -1,31 +1,172 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿<h2></h2>
+<div class="row">
+    <div class="col-md-5">
+        <h3>Matrix A</h3>
+        <div id="jqGridLeft_container">
+            <table id="jqGridLeft"></table>
+        </div>
+        <table class="tableMatrix">
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-default btn-block" id="setZeroLeft">
+                        <strong>0</strong>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default btn-block" id="setIdentityLeft">
+                        <strong>E</strong>
+                    </button>
+                </td>
+                <td>
+                    <label class="col-xs-3 control-label hidden-xs">Rank</label>
+                    <div class="col-md-9">
+                        <select class="form-control rank">
+                            <option>2</option>
+                            <option selected>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary btn-block" id="reverseLeft"><strong>Reverse</strong></button>
+                </td>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary btn-block" id="transposeLeft"><strong>Transpose</strong></button>
+                </td>
+
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary btn-block" id="multiplyByLeft"><strong>Multiply by</strong></button>
+                </td>
+                <td>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="number">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-2 operations">
+        <h3>Operations</h3>
+
+        <p>
+            <button type="button" class="btn btn-primary btn-block" id="addMatrices"><strong>+</strong></button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-primary btn-block" id="substructMatrices"><strong>-</strong></button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-primary btn-block" id="multiplyMatrices"><strong>*</strong></button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-primary btn-block" id="divideMatrices"><strong>/</strong></button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-default btn-block" id="leftMatrixToRight">
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-default btn-block" id="rightMatrixToLeft">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            </button>
+        </p>
+        <p>
+            <button type="button" class="btn btn-default btn-block" id="swapMatrices">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </button>
+        </p>
+    </div>
+    <div class="col-md-5">
+        <h3>Matrix B</h3>
+        <div id="jqGridRight_container">
+            <table id="jqGridRight"></table>
+        </div>
+        <table class="tableMatrix">
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-default btn-block" id="setZeroRight">
+                        <strong>0</strong>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default btn-block" id="setIdentityRight">
+                        <strong>E</strong>
+                    </button>
+                </td>
+                <td>
+
+                    <label class="col-xs-3 control-label hidden-xs">Rank</label>
+
+                    <div class="col-md-9">
+                        <select class="form-control rank">
+                            <option>2</option>
+                            <option selected>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary btn-block" id="reverseRight"><strong>Reverse</strong></button>
+                </td>
+
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary btn-block"><strong>Transpose</strong></button>
+                </td>
+
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary btn-block"><strong>Multiply by</strong></button>
+                </td>
+                <td>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="number">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
-
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h3>Result Matrix</h3>
+        <div id="jqGridResult_container">
+            <table id="jqGridResult"></table>
+        </div>
+        <button type="button" class="btn btn-default pull-left">
+            <strong>A</strong>
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default pull-right">
+            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            <strong>B</strong>
+        </button>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+@Html.Hidden("baseURL", "Home/")
+
+@section Scripts {
+    <script src="~/Scripts/matrix.js"></script>
+}

@@ -183,11 +183,10 @@ function transformMatrix(gridId, action) {
     }
 
     params.rank = matrixRank;
-
     $.ajax(
         {
             type: "POST",
-            url: action,
+            url: $("#baseURL").val() + action,
             data: params,
             //data: { mdata: JSON.stringify(data), rank: matrixRank },
             dataType: "json",

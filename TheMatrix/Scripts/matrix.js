@@ -70,23 +70,27 @@ $('#setZeroRight').on('click', function () {
 })
 
 $('#reverseLeft').on('click', function () {
-    //setZero(leftGrid);
     transformMatrix(leftGrid, "ReverseMatrix")
 })
 
 $('#reverseRight').on('click', function () {
-    //setZero(rightGrid);
     transformMatrix(rightGrid, "ReverseMatrix")
 })
 
 $('#transposeLeft').on('click', function () {
-    //setZero(leftGrid);
     transformMatrix(leftGrid, "TransposingMatrix")
 })
 
 $('#transposeRight').on('click', function () {
-    //setZero(rightGrid);
     transformMatrix(rightGrid, "TransposingMatrix")
+})
+
+$('#multiplyByLeft').on('click', function () {
+    calculateMatrices("MultByMatrix", "left")
+})
+
+$('#multiplyByRight').on('click', function () {
+    calculateMatrices("SubtractMatrix", "right")
 })
 
 $('#leftMatrixToRight').on('click', function () {
@@ -158,7 +162,6 @@ function renderGrid(gridId, editable) {
         colModelItem.editable = true;
         colModelItem.edittype = "text";
         colModelItem.editrules = { number: true };
-        //colModel.push(JSON.stringify(colModelItem));
         colModel.push(colModelItem);
     }
 
@@ -259,17 +262,16 @@ function transformMatrix(gridId, action) {
         });
 }
 
-
 var sourceMatrix;
 
 function copyMatrixToMatrix(fromGrid, toGrid) {
+
     stopEditing();
 
     sourceMatrix = fromGrid;
 
     for (i = 1; i <= matrixRank; i++) {
-        var grid = jQuery(fromGrid);
-        var row = grid.jqGrid('getRowData', i);
+        var row = jQuery(fromGrid).jqGrid('getRowData', i);
         jQuery(toGrid).setRowData(i, row);
     }
 
@@ -289,12 +291,18 @@ function copyMatrixToMatrix(fromGrid, toGrid) {
 }
 
 function swapMatrices() {
+
     stopEditing();
 
-
+    for (i = 1; i <= matrixRank; i++) {
+        var rowLeft = jQuery(leftGrid).jqGrid('getRowData', i);
+        var rowRight = jQuery(rightGrid).jqGrid('getRowData', i);
+        jQuery(leftGrid).setRowData(i, rowRight);
+        jQuery(rightGrid).setRowData(i, rowLeft);
+    }
 }
 
-function calculateMatrices(action) {
+function calculateMatrices(action, firstMatrix) {
 
     var params = {};
 
@@ -315,6 +323,7 @@ function calculateMatrices(action) {
     params.mdatab = JSON.stringify(datab);
 
     params.rank = matrixRank;
+    params.firstMatrix = firstMatrix;
 
     $.ajax(
         {

@@ -13,10 +13,10 @@ namespace MatrixCalculatorService
         Matrix Add(Matrix A, Matrix B);
         Matrix Subtract(Matrix A, Matrix B);
         Matrix Mult(Matrix A, Matrix B);
-        Matrix Divide(Matrix A, Matrix B, out double det);
+        Matrix Divide(Matrix A, Matrix B);
 
         Matrix Transposing(Matrix A);
-        Matrix Reverse(Matrix A, out double det);
+        Matrix Reverse(Matrix A);
         Matrix MultBy(Matrix A, double number);
         Matrix DivideBy(Matrix A, double number);
 

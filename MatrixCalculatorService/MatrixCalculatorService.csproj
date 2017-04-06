@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="CalculatorService.cs" />
     <Compile Include="ICalculatorService.cs" />
-    <Compile Include="IMatrix.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="MatrixCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

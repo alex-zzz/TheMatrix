@@ -46,25 +46,25 @@ namespace MatrixCalculatorService
             return C;
         }
 
-        public double[,] Divide(double[,] A, double[,] B, out double det)
+        public double[,] Divide(double[,] A, double[,] B)
         {
             int size = A.GetLength(0);
             double[,] C = new double[size, size];
 
-            C = Mult(A, Reverse(B, out det));
+            C = Mult(A, Reverse(B));
 
             return C;
         }
 
 
         //-------------------------------------------------------------------------
-        public double[,] Reverse(double[,] A, out double det)
+        public double[,] Reverse(double[,] A)
         {
             int size = A.GetLength(0);
             double[,] B = new double[size, size * 2];
             double[,] C = new double[size, size];
 
-            det = Determ(A);
+            double det = Determ(A);
             if (det == 0)
                 return C;
 

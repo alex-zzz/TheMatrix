@@ -20,9 +20,8 @@ namespace MatrixCalculatorService
             return new Matrix(Array);
         }
 
-        public Matrix Divide(Matrix A, Matrix B, out double det)
+        public Matrix Divide(Matrix A, Matrix B)
         {
-            det = 0;
             return A / B;
         }
 
@@ -51,9 +50,8 @@ namespace MatrixCalculatorService
             return A * number;
         }
 
-        public Matrix Reverse(Matrix A, out double det)
+        public Matrix Reverse(Matrix A)
         {
-            det = 0;
             return A.Reverse();
         }
 

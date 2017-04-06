@@ -16,7 +16,7 @@ namespace TheMatrix.Controllers
         ICalculatorService Service;
 
         static HomeController()
-        {            
+        {
             //matrix.MatrixArray = new double[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
         }
 
@@ -29,7 +29,7 @@ namespace TheMatrix.Controllers
         {
             var collection = (Newtonsoft.Json.Linq.JContainer)JsonConvert.DeserializeObject(m);
             int rank = collection.Count;
- 
+
             double[,] data = new double[rank, rank];
 
             int i = 0, j = 0;
@@ -58,77 +58,140 @@ namespace TheMatrix.Controllers
 
         JsonResult GetJSon(Matrix m)
         {
-            return Json(JsonConvert.SerializeObject(m.Array), JsonRequestBehavior.AllowGet);
+            //return Json(JsonConvert.SerializeObject(m.Array), JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, responseData = JsonConvert.SerializeObject(m.Array) }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetIdentityMatrix(int rank)
         {
-            Matrix matrix = Service.GetIdentityMatrix(rank);
-            return GetJSon(matrix).Success("Ura!!!");
+            try
+            {
+                return GetJSon(Service.GetIdentityMatrix(rank));
+            }
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
         public ActionResult GetZeroMatrix(int rank)
         {
-            Matrix matrix = Service.GetZeroMatrix(rank);
-            return GetJSon(matrix);
+            try
+            {
+                return GetJSon(Service.GetZeroMatrix(rank));
+            }
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
-        public ActionResult AddMatrix(string mA, string mB)
+        public ActionResult AddMatrix(string mdataA, string mdataB)
         {
-            Matrix matrix = Service.Add(GetMatrixFromData(mA), GetMatrixFromData(mB));
-            return GetJSon(matrix);
+            try
+            {
+                return GetJSon(Service.Add(GetMatrixFromData(mdataA), GetMatrixFromData(mdataB)));
+            }
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
-        public ActionResult SubtractMatrix(string mA, string mB)
+        public ActionResult SubtractMatrix(string mdataA, string mdataB)
         {
-            Matrix matrix = Service.Subtract(GetMatrixFromData(mA), GetMatrixFromData(mB));
-            return GetJSon(matrix);
+            try
+            {
+                return GetJSon(Service.Subtract(GetMatrixFromData(mdataA), GetMatrixFromData(mdataB)));
+            }
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
-        public ActionResult MultMatrix(string mA, string mB)
+        public ActionResult MultMatrix(string mdataA, string mdataB)
         {
-            Matrix matrix = Service.Mult(GetMatrixFromData(mA), GetMatrixFromData(mB));
-            return GetJSon(matrix);
+            try
+            {
+                return GetJSon(Service.Mult(GetMatrixFromData(mdataA), GetMatrixFromData(mdataB)));
+            }
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
-        public ActionResult DivideMatrix(string mA, string mB)
+        public ActionResult DivideMatrix(string mdataA, string mdataB)
         {
-            double det = 0;
-            Matrix matrix = Service.Divide(GetMatrixFromData(mA), GetMatrixFromData(mB), out det);
-            return GetJSon(matrix);
+            try
+            {
+                Matrix matrixB = GetMatrixFromData(mdataB);
+                if (matrixB.Det == 0)
+                {
+                    return Json(new { success = false, responseData = "The determinant of the matrix B is 0!" }, JsonRequestBehavior.AllowGet);
+                }
+
+                return GetJSon(Service.Divide(GetMatrixFromData(mdataA), matrixB));
+            }
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
-        public ActionResult MultByMatrix(string mA, double num)
+        public ActionResult MultByMatrix(string mdata, double num)
         {
-            Matrix matrix = Service.MultBy(GetMatrixFromData(mA), num);
-            return GetJSon(matrix);
+            try
+            {
+                return GetJSon(Service.MultBy(GetMatrixFromData(mdata), num));
+            }
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
-        public ActionResult DivideByMatrix(string mA, double num)
+        public ActionResult DivideByMatrix(string mdata, double num)
         {
-            Matrix matrix = Service.DivideBy(GetMatrixFromData(mA), num);
-            return GetJSon(matrix);
+            try
+            {
+                return GetJSon(Service.DivideBy(GetMatrixFromData(mdata), num));
+            }
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
         public ActionResult TransposingMatrix(string mdata)
         {
             try
             {
-                Matrix matrix = Service.Transposing(GetMatrixFromData(mdata));
-                return GetJSon(matrix);
+                return GetJSon(Service.Transposing(GetMatrixFromData(mdata)));
             }
-            catch { return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri).Danger("В матрице присутсвуют некорректные данные!"); };
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
         public ActionResult ReverseMatrix(string mdata, int rank)
         {
             try
             {
-                double det = 0;
-                Matrix matrix = Service.Reverse(GetMatrixFromData(mdata), out det);
-                return GetJSon(matrix);
+                Matrix matrixA = GetMatrixFromData(mdata);
+                if (matrixA.Det == 0)
+                {
+                    return Json(new { success = false, responseData = "The determinant of the matrix is 0!" }, JsonRequestBehavior.AllowGet);
+                }
+
+                return GetJSon(Service.Reverse(matrixA));
             }
-            catch { return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri).Danger("В матрице присутсвуют некорректные данные!"); };
+            catch
+            {
+                return Json(new { success = false, responseData = "There are incorrect data in the matrix!" }, JsonRequestBehavior.AllowGet);
+            };
         }
 
         public ActionResult Index()

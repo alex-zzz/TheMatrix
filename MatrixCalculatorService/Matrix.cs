@@ -12,8 +12,7 @@ namespace MatrixCalculatorService
 
         public static Matrix Reverse(this Matrix A)
         {
-            double det = 0;
-            return new Matrix(calc.Reverse(A.Array, out det));
+            return new Matrix(calc.Reverse(A.Array));
         }
 
         public static Matrix Transpose(this Matrix A)
@@ -54,8 +53,7 @@ namespace MatrixCalculatorService
 
         public static Matrix operator / (Matrix A, Matrix B)
         {
-            double det = 0;
-            return new Matrix(calc.Divide(A.Array, B.Array, out det));
+            return new Matrix(calc.Divide(A.Array, B.Array));
         }
 
         public static Matrix operator * (Matrix A, double num)
@@ -68,17 +66,4 @@ namespace MatrixCalculatorService
             return new Matrix(calc.DivideBy(A.Array, num));
         }
     }
-
-    class Test
-    {
-        void Main()
-        {
-            Matrix A = new Matrix(new double[,] { { 2, 4, 5, 7 }, { 4, 7, 8, 1 }, { 1, 4, 2, 6 }, { 3, 2, 8, 0 } });
-            Matrix B = new Matrix(new double[,] { { 2, 4, 5, 7 }, { 4, 7, 8, 1 }, { 1, 4, 2, 6 }, { 3, 2, 8, 0 } });
-
-            Matrix C = A + B;
-            Matrix D = A.Reverse();
-        }
-    }
-
 }

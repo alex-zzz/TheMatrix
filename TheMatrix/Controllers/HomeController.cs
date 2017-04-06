@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -25,8 +26,28 @@ namespace TheMatrix.Controllers
 
         public Matrix GetMatrixFromData(string m)
         {
-            Matrix matrix = null;
-            return matrix;
+            var collection = (Newtonsoft.Json.Linq.JContainer)JsonConvert.DeserializeObject(m);
+            int rank = collection.Count;
+ 
+            double[,] data = new double[rank, rank];
+
+            int i = 0, j = 0;
+            foreach (var rows in collection)
+            {
+                foreach (var row in rows)
+                {
+                    j = 0;
+                    foreach (var cell in row)
+                    {
+                        data[i, j] = double.Parse((((Newtonsoft.Json.Linq.JProperty)cell).Value.ToString()), CultureInfo.InvariantCulture);
+                        j++;
+                    }
+                }
+
+                i++;
+            }
+            
+            return new Matrix(data);
         }
 
         JsonResult GetJSon(Matrix m)

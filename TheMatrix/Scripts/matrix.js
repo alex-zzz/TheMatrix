@@ -105,12 +105,16 @@ $('#resultMatrixToLeft').on('click', function () {
     copyMatrixToMatrix(resultGrid, leftGrid)
 })
 
+$('#swapMatrices').on('click', function () {
+    swapMatrices()
+})
+
 $('#addMatrices').on('click', function () {
     calculateMatrices("AddMatrix")
 })
 
-$('#subtructMatrices').on('click', function () {
-    calculateMatrices("SubtructMatrix")
+$('#subtractMatrices').on('click', function () {
+    calculateMatrices("SubtractMatrix")
 })
 
 $('#multiplyMatrices').on('click', function () {

@@ -58,7 +58,6 @@ namespace TheMatrix.Controllers
 
         JsonResult GetJSon(Matrix m)
         {
-            //return Json(JsonConvert.SerializeObject(m.Array), JsonRequestBehavior.AllowGet);
             return Json(new { success = true, responseData = JsonConvert.SerializeObject(m.Array) }, JsonRequestBehavior.AllowGet);
         }
 
@@ -202,20 +201,6 @@ namespace TheMatrix.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Grid()
-        {
-            ViewBag.Message = "Your grid page.";
 
             return View();
         }

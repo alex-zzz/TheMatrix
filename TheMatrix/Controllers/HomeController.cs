@@ -33,22 +33,27 @@ namespace TheMatrix.Controllers
             double[,] data = new double[rank, rank];
 
             int i = 0, j = 0;
-            foreach (var rows in collection)
+
+            try
             {
-                foreach (var row in rows)
+                foreach (var rows in collection)
                 {
-                    j = 0;
-                    foreach (var cell in row)
+                    foreach (var row in rows)
                     {
-                        data[i, j] = double.Parse((((Newtonsoft.Json.Linq.JProperty)cell).Value.ToString()), CultureInfo.InvariantCulture);
-                        j++;
+                        j = 0;
+                        foreach (var cell in row)
+                        {
+                            data[i, j] = double.Parse((((Newtonsoft.Json.Linq.JProperty)cell).Value.ToString()), CultureInfo.InvariantCulture);
+                            j++;
+                        }
                     }
+
+                    i++;
                 }
 
-                i++;
+                return new Matrix(data);
             }
-            
-            return new Matrix(data);
+            catch { throw; };
         }
 
         JsonResult GetJSon(Matrix m)
@@ -107,15 +112,23 @@ namespace TheMatrix.Controllers
 
         public ActionResult TransposingMatrix(string mdata)
         {
-            Matrix matrix = Service.Transposing(GetMatrixFromData(mdata));
-            return GetJSon(matrix);
+            try
+            {
+                Matrix matrix = Service.Transposing(GetMatrixFromData(mdata));
+                return GetJSon(matrix);
+            }
+            catch { return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri).Danger("В матрице присутсвуют некорректные данные!"); };
         }
 
         public ActionResult ReverseMatrix(string mdata, int rank)
         {
-            double det = 0;
-            Matrix matrix = Service.Reverse(GetMatrixFromData(mdata), out det);
-            return GetJSon(matrix);
+            try
+            {
+                double det = 0;
+                Matrix matrix = Service.Reverse(GetMatrixFromData(mdata), out det);
+                return GetJSon(matrix);
+            }
+            catch { return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri).Danger("В матрице присутсвуют некорректные данные!"); };
         }
 
         public ActionResult Index()

@@ -83,16 +83,16 @@ namespace TheMatrix.Controllers
             return GetJSon(matrix);
         }
 
-        public ActionResult TransposingMatrix(string mA)
+        public ActionResult TransposingMatrix(string mdata)
         {
-            Matrix matrix = Service.Transposing(GetMatrixFromData(mA));
+            Matrix matrix = Service.Transposing(GetMatrixFromData(mdata));
             return GetJSon(matrix);
         }
 
-        public ActionResult ReverseMatrix(string mA)
+        public ActionResult ReverseMatrix(string mdata, int rank)
         {
             double det = 0;
-            Matrix matrix = Service.Reverse(GetMatrixFromData(mA), out det);
+            Matrix matrix = Service.Reverse(GetMatrixFromData(mdata), out det);
             return GetJSon(matrix);
         }
 

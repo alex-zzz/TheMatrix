@@ -28,11 +28,13 @@ namespace MatrixCalculatorService
 
         public double[,] Array {get; set;}
         public int Rank { get; set; }
+        public double Det { get; set; }
 
         public Matrix(double[,] A)
         {
             Array = A;
             Rank = A.GetLength(0);
+            Det = MatrixCalculator.Determ(A);
         }
 
         public static Matrix operator + (Matrix A, Matrix B)

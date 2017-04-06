@@ -110,7 +110,7 @@ $('#addMatrices').on('click', function () {
 })
 
 $('#subtructMatrices').on('click', function () {
-    calculateMatrices("subtructMatrix")
+    calculateMatrices("SubtructMatrix")
 })
 
 $('#multiplyMatrices').on('click', function () {

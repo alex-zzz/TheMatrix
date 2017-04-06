@@ -179,7 +179,6 @@ function transformMatrix(gridId, action) {
             }
             data[i] = jQuery(gridId).jqGrid('getRowData', i + 1);
         }
-
         params.mdata = JSON.stringify(data);
     }
 

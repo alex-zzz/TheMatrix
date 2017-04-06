@@ -19,6 +19,10 @@ namespace TheMatrix
                         "~/Scripts/jquery.jqGrid.min.js",
                         "~/Scripts/i18n/grid.locale-en.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/flashmes").Include(
+            "~/Scripts/jquery.cookie.js",
+            "~/Scripts/jquery.flashMessage.js"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

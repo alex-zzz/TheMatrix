@@ -24,9 +24,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Grid", "Grid", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
             </div>
         </div>
@@ -41,7 +39,9 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqgrid")
+    @Scripts.Render("~/bundles/flashmes")
     @Scripts.Render("~/bundles/bootstrap")
+    @Html.Partial("_Flash")
     @RenderSection("scripts", required: false)
 </body>
 </html>

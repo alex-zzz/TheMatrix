@@ -109,6 +109,18 @@ $('#addMatrices').on('click', function () {
     calculateMatrices("AddMatrix")
 })
 
+$('#subtructMatrices').on('click', function () {
+    calculateMatrices("subtructMatrix")
+})
+
+$('#multiplyMatrices').on('click', function () {
+    calculateMatrices("MultMatrix")
+})
+
+$('#divideMatrices').on('click', function () {
+    calculateMatrices("DivideMatrix")
+})
+
 //function setZero(gridId) {
 
 //    for (i = 1; i <= matrixRank; i++) {
@@ -243,8 +255,13 @@ function transformMatrix(gridId, action) {
         });
 }
 
+
+var sourceMatrix;
+
 function copyMatrixToMatrix(fromGrid, toGrid) {
     stopEditing();
+
+    sourceMatrix = fromGrid;
 
     for (i = 1; i <= matrixRank; i++) {
         var grid = jQuery(fromGrid);
@@ -259,12 +276,18 @@ function copyMatrixToMatrix(fromGrid, toGrid) {
 
         for (i = 1; i <= matrixRank; i++) {
             for (j = 0; j < matrixRank; j++) {
-                jQuery(fromGrid).jqGrid('setCell', i, j, " ");
+                jQuery(sourceMatrix).jqGrid('setCell', i, j, " ");
             }
         }
 
         $('#confirm-clear').modal('hide');
     });
+}
+
+function swapMatrices() {
+    stopEditing();
+
+
 }
 
 function calculateMatrices(action) {

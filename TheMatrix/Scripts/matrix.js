@@ -105,6 +105,10 @@ $('#resultMatrixToLeft').on('click', function () {
     copyMatrixToMatrix(resultGrid, leftGrid)
 })
 
+$('#addMatrices').on('click', function () {
+    calculateMatrices("AddMatrix")
+})
+
 //function setZero(gridId) {
 
 //    for (i = 1; i <= matrixRank; i++) {
@@ -197,12 +201,6 @@ function transformMatrix(gridId, action) {
     if (action != "GetIdentityMatrix" && action != "GetZeroMatrix") {
         var data = {};
         for (i = 0; i < matrixRank; i++) {
-            //if (gridId == leftGrid) {
-            //    jQuery(gridId).jqGrid("saveCell", lastSelectedRowLeft, lastSelectedCellLeft);
-            //}
-            //else if (gridId == rightGrid) {
-            //    jQuery(gridId).jqGrid("saveCell", lastSelectedRowRight, lastSelectedCellRight);
-            //}
             stopEditing();
             data[i] = jQuery(gridId).jqGrid('getRowData', i + 1);
         }
@@ -210,6 +208,7 @@ function transformMatrix(gridId, action) {
     }
 
     params.rank = matrixRank;
+
     $.ajax(
         {
             type: "POST",
@@ -219,7 +218,12 @@ function transformMatrix(gridId, action) {
             dataType: "json",
             success: function (result) {
 
-                var array = JSON.parse(result);
+                if (!result.success) {
+                    alert(result.responseData);
+                    return;
+                }
+
+                var array = JSON.parse(result.responseData);
 
                 for (i = 0; i < matrixRank; i++) {
 
@@ -234,14 +238,9 @@ function transformMatrix(gridId, action) {
                 }
             },
             error: function (x, e) {
-                //alert(x.readyState + " " + x.status + " " + e.msg);
+                alert(x.readyState + " " + x.status + " " + e.msg);
             }
         });
-}
-
-function stopEditing() {
-    jQuery(leftGrid).jqGrid("saveCell", lastSelectedRowLeft, lastSelectedCellLeft);
-    jQuery(rightGrid).jqGrid("saveCell", lastSelectedRowRight, lastSelectedCellRight);
 }
 
 function copyMatrixToMatrix(fromGrid, toGrid) {
@@ -266,6 +265,66 @@ function copyMatrixToMatrix(fromGrid, toGrid) {
 
         $('#confirm-clear').modal('hide');
     });
+}
+
+function calculateMatrices(action) {
+
+    var params = {};
+
+    stopEditing();
+    var dataa = {};
+
+    for (i = 0; i < matrixRank; i++) {
+        dataa[i] = jQuery(leftGrid).jqGrid('getRowData', i + 1);
+    }
+    params.mdataa = JSON.stringify(dataa);
+
+    var datab = {};
+
+    for (i = 0; i < matrixRank; i++) {
+
+        datab[i] = jQuery(ri).jqGrid('getRowData', i + 1);
+    }
+    params.mdatab = JSON.stringify(datab);
+
+    params.rank = matrixRank;
+
+    $.ajax(
+        {
+            type: "POST",
+            url: $("#baseURL").val() + action,
+            data: params,
+            dataType: "json",
+            success: function (result) {
+
+                if (!result.success) {
+                    alert(result.responseData);
+                    return;
+                }
+
+                var array = JSON.parse(result.responseData);
+
+                for (i = 0; i < matrixRank; i++) {
+
+                    var rowCells = {};
+
+                    for (j = 0; j < matrixRank; j++) {
+                        rowCells['c' + (j + 1)] = array[i][j];
+                    }
+
+                    var t = jQuery(resultGrid).jqGrid('setRowData', i + 1, rowCells);
+                }
+            },
+            error: function (x, e) {
+                alert(x.readyState + " " + x.status + " " + e.msg);
+            }
+        });
+
+}
+
+function stopEditing() {
+    jQuery(leftGrid).jqGrid("saveCell", lastSelectedRowLeft, lastSelectedCellLeft);
+    jQuery(rightGrid).jqGrid("saveCell", lastSelectedRowRight, lastSelectedCellRight);
 }
 
 

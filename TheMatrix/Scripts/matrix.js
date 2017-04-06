@@ -52,36 +52,48 @@ $('select.rank').on('change', function () {
 })
 
 $('#setIdentityLeft').on('click', function () {
-    transformMatrix(leftGrid, "GetMatrix")
+    transformMatrix(leftGrid, "GetIdentityMatrix")
 })
 
 $('#setIdentityRight').on('click', function () {
-    transformMatrix(rightGrid, "GetMatrix")
+    transformMatrix(rightGrid, "GetIdentityMatrix")
 })
 
 $('#setZeroLeft').on('click', function () {
-    setZero(leftGrid);
+    //setZero(leftGrid);
+    transformMatrix(leftGrid, "GetZeroMatrix")
 })
 
 $('#setZeroRight').on('click', function () {
-    setZero(rightGrid);
+    //setZero(rightGrid);
+    transformMatrix(rightGrid, "GetZeroMatrix")
 })
 
-function setZero(gridId) {
+$('#reverseLeft').on('click', function () {
+    //setZero(leftGrid);
+    transformMatrix(leftGrid, "ReverseMatrix")
+})
 
-    for (i = 1; i <= matrixRank; i++) {
+$('#reverseRight').on('click', function () {
+    //setZero(rightGrid);
+    transformMatrix(rightGrid, "ReverseMatrix")
+})
 
-        var rowCells = {};
+//function setZero(gridId) {
 
-        for (j = 1; j <= matrixRank; j++) {
-            rowCells['c' + j] = 0;
-        }
+//    for (i = 1; i <= matrixRank; i++) {
 
-        var cells = rowCells;
+//        var rowCells = {};
 
-        var t = jQuery(gridId).jqGrid('setRowData', i, cells);
-    }
-}
+//        for (j = 1; j <= matrixRank; j++) {
+//            rowCells['c' + j] = 0;
+//        }
+
+//        var cells = rowCells;
+
+//        var t = jQuery(gridId).jqGrid('setRowData', i, cells);
+//    }
+//}
 
 function renderGrid(gridId, editable) {
 
@@ -154,25 +166,31 @@ function renderGrid(gridId, editable) {
 
 function transformMatrix(gridId, action) {
 
-    var data = {};
+    var params = {};
 
-    for (i = 0; i < matrixRank; i++) {
-
-        if (gridId == leftGrid) {
-            jQuery(gridId).jqGrid("saveCell", lastSelectedRowLeft, lastSelectedCellLeft);
+    if (action != "GetIdentityMatrix" && action != "GetZeroMatrix") {
+        var data = {};
+        for (i = 0; i < matrixRank; i++) {
+            if (gridId == leftGrid) {
+                jQuery(gridId).jqGrid("saveCell", lastSelectedRowLeft, lastSelectedCellLeft);
+            }
+            else if (gridId == rightGrid) {
+                jQuery(gridId).jqGrid("saveCell", lastSelectedRowRight, lastSelectedCellRight);
+            }
+            data[i] = jQuery(gridId).jqGrid('getRowData', i + 1);
         }
-        else if (gridId == rightGrid) {
-            jQuery(gridId).jqGrid("saveCell", lastSelectedRowRight, lastSelectedCellRight);
-        }
 
-        data[i] = jQuery(gridId).jqGrid('getRowData', i + 1);
+        params.mdata = JSON.stringify(data);
     }
+
+    params.rank = matrixRank;
 
     $.ajax(
         {
             type: "POST",
             url: action,
-            data: { mdata: JSON.stringify(data), rank: matrixRank },
+            data: params,
+            //data: { mdata: JSON.stringify(data), rank: matrixRank },
             dataType: "json",
             success: function (result) {
 

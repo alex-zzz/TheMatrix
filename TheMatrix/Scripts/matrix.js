@@ -283,7 +283,7 @@ function calculateMatrices(action) {
 
     for (i = 0; i < matrixRank; i++) {
 
-        datab[i] = jQuery(ri).jqGrid('getRowData', i + 1);
+        datab[i] = jQuery(rightGrid).jqGrid('getRowData', i + 1);
     }
     params.mdatab = JSON.stringify(datab);
 

@@ -89,6 +89,10 @@ $('#transposeRight').on('click', function () {
     transformMatrix(rightGrid, "TransposingMatrix")
 })
 
+$('#leftMatrixToRight').on('click', function () {
+    copyMatrixToMatrix(leftGrid, rightGrid)
+})
+
 //function setZero(gridId) {
 
 //    for (i = 1; i <= matrixRank; i++) {
@@ -209,6 +213,7 @@ function transformMatrix(gridId, action) {
                     var rowCells = {};
 
                     for (j = 0; j < matrixRank; j++) {
+                        //rowCells['c' + (j + 1)] = array[i][j].toFixed(3);
                         rowCells['c' + (j + 1)] = array[i][j];
                     }
 
@@ -216,9 +221,18 @@ function transformMatrix(gridId, action) {
                 }
             },
             error: function (x, e) {
-                alert(x.readyState + " " + x.status + " " + e.msg);
+                //alert(x.readyState + " " + x.status + " " + e.msg);
             }
         });
+}
+
+function copyMatrixToMatrix(fromGrid, toGrid) {
+    for (i = 1; i <= matrixRank; i++) {
+        var grid = jQuery(fromGrid);
+        var row = grid.jqGrid('getRowData', i);
+        jQuery(toGrid).setRowData(i, row);
+
+    }
 }
 
 

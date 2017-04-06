@@ -23,75 +23,71 @@ namespace TheMatrix.Controllers
             Service = s;
         }
 
-        public string GetData()
+        public Matrix GetMatrixFromData(string m)
         {
-            //var s = JsonConvert.SerializeObject(matrix.MatrixArray);
-            return "";
+            Matrix matrix = null;
+            return matrix;
         }
 
-        public ActionResult GetMatrix(int rank)
+        JsonResult GetJSon(Matrix m)
         {
+            return Json(JsonConvert.SerializeObject(m.Array), JsonRequestBehavior.AllowGet);
+        }
 
-            //StringBuilder matrixData = new StringBuilder("colModel : [");
-
-
-            //for (int i = 1; i <= rank; i++)
-            //{
-            //    matrixData.Append("{index: " + i + ", editable: true, edittype: 'text', editrules: { number: true }},");
-
-
-            //}
-
-            //matrixData.Append("]");
-
-            //var s = matrixData.ToString();
-
-            //var result = new
-            //{
-            //    colNames = new[]
-            //{
-            //        "T1","T2","T3","T4","T5"
-            //    },
-            //    colModels = new[]
-            //{
-            //       new {
-            //            index = "T1",
-            //            name = "T1"
-            //        },
-            //            new {
-            //            index = "T2",
-            //            name = "T2"
-            //        },
-            //            new {
-            //            index = "T3",
-            //            name = "T3"
-            //        },
-            //            new {
-            //            index = "T4",
-            //            name = "T4"
-            //        },
-            //            new {
-            //            index = "T5",
-            //            name = "T5"
-            //        }
-            //    },
-            //    data = new
-            //    {
-            //        rows = new[] {
-            //                new{T1=rank,T2=rank,T3=rank,T4=rank,T5=rank},
-            //                new{T1=123,T2=321,T3=333,T4=444,T5=555},
-            //                new{T1=123,T2=321,T3=333,T4=444,T5=555},
-            //                new{T1=123,T2=321,T3=333,T4=444,T5=555},
-            //                new{T1=123,T2=321,T3=333,T4=444,T5=555}
-            //            }
-            //    }
-            //};
-
-            //var s = Json(result, JsonRequestBehavior.AllowGet);
-
+        public ActionResult GetIdentityMatrix(int rank)
+        {
             Matrix matrix = Service.GetIdentityMatrix(rank);
-            var s = Json(JsonConvert.SerializeObject(matrix.Array), JsonRequestBehavior.AllowGet);
-            return s;
+            return GetJSon(matrix);
+        }
+
+        public ActionResult AddMatrix(string mA, string mB)
+        {
+            Matrix matrix = Service.Add(GetMatrixFromData(mA), GetMatrixFromData(mB));
+            return GetJSon(matrix);
+        }
+
+        public ActionResult SubtractMatrix(string mA, string mB)
+        {
+            Matrix matrix = Service.Subtract(GetMatrixFromData(mA), GetMatrixFromData(mB));
+            return GetJSon(matrix);
+        }
+
+        public ActionResult MultMatrix(string mA, string mB)
+        {
+            Matrix matrix = Service.Mult(GetMatrixFromData(mA), GetMatrixFromData(mB));
+            return GetJSon(matrix);
+        }
+
+        public ActionResult DivideMatrix(string mA, string mB)
+        {
+            double det = 0;
+            Matrix matrix = Service.Divide(GetMatrixFromData(mA), GetMatrixFromData(mB), out det);
+            return GetJSon(matrix);
+        }
+
+        public ActionResult MultByMatrix(string mA, double num)
+        {
+            Matrix matrix = Service.MultBy(GetMatrixFromData(mA), num);
+            return GetJSon(matrix);
+        }
+
+        public ActionResult DivideByMatrix(string mA, double num)
+        {
+            Matrix matrix = Service.DivideBy(GetMatrixFromData(mA), num);
+            return GetJSon(matrix);
+        }
+
+        public ActionResult TransposingMatrix(string mA)
+        {
+            Matrix matrix = Service.Transposing(GetMatrixFromData(mA));
+            return GetJSon(matrix);
+        }
+
+        public ActionResult ReverseMatrix(string mA)
+        {
+            double det = 0;
+            Matrix matrix = Service.Reverse(GetMatrixFromData(mA), out det);
+            return GetJSon(matrix);
         }
 
         public ActionResult Index()

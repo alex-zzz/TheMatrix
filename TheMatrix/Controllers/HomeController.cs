@@ -40,6 +40,12 @@ namespace TheMatrix.Controllers
             return GetJSon(matrix);
         }
 
+        public ActionResult GetZeroMatrix(int rank)
+        {
+            Matrix matrix = Service.GetZeroMatrix(rank);
+            return GetJSon(matrix);
+        }
+
         public ActionResult AddMatrix(string mA, string mB)
         {
             Matrix matrix = Service.Add(GetMatrixFromData(mA), GetMatrixFromData(mB));

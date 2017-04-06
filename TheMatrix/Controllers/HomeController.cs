@@ -15,10 +15,10 @@ namespace TheMatrix.Controllers
     {
         ICalculatorService Service;
 
-        static HomeController()
-        {
-            //matrix.MatrixArray = new double[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-        }
+        //static HomeController()
+        //{
+        //    //matrix.MatrixArray = new double[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        //}
 
         public HomeController(ICalculatorService s)
         {
@@ -139,11 +139,11 @@ namespace TheMatrix.Controllers
             };
         }
 
-        public ActionResult MultByMatrix(string mdata, double num)
+        public ActionResult MultByMatrix(string mdata, double factor)
         {
             try
             {
-                return GetJSon(Service.MultBy(GetMatrixFromData(mdata), num));
+                return GetJSon(Service.MultBy(GetMatrixFromData(mdata), factor));
             }
             catch
             {
@@ -195,13 +195,6 @@ namespace TheMatrix.Controllers
 
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
     }

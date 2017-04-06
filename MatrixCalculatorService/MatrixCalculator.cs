@@ -83,7 +83,7 @@ namespace MatrixCalculatorService
                 Bi = B[i, i];
                 for (int j = 0; j < size * 2; j++)
                 {
-                    B[i, j] /= Bi;
+                    B[i, j] /= Bi; 
                 }
 
                 for (int k = 0; k < size; k++)
@@ -100,7 +100,7 @@ namespace MatrixCalculatorService
 
             for (int i = 0; i < size; i++)
                 for (int j = size; j < size * 2; j++)
-                    C[i, j - size] = B[i, j];
+                    C[i, j - size] = Math.Round(B[i, j], 2);
 
             return C;
         }

@@ -93,6 +93,18 @@ $('#leftMatrixToRight').on('click', function () {
     copyMatrixToMatrix(leftGrid, rightGrid)
 })
 
+$('#rightMatrixToLeft').on('click', function () {
+    copyMatrixToMatrix(rightGrid, leftGrid)
+})
+
+$('#resultMatrixToRight').on('click', function () {
+    copyMatrixToMatrix(resultGrid, rightGrid)
+})
+
+$('#resultMatrixToLeft').on('click', function () {
+    copyMatrixToMatrix(resultGrid, leftGrid)
+})
+
 //function setZero(gridId) {
 
 //    for (i = 1; i <= matrixRank; i++) {
@@ -185,12 +197,13 @@ function transformMatrix(gridId, action) {
     if (action != "GetIdentityMatrix" && action != "GetZeroMatrix") {
         var data = {};
         for (i = 0; i < matrixRank; i++) {
-            if (gridId == leftGrid) {
-                jQuery(gridId).jqGrid("saveCell", lastSelectedRowLeft, lastSelectedCellLeft);
-            }
-            else if (gridId == rightGrid) {
-                jQuery(gridId).jqGrid("saveCell", lastSelectedRowRight, lastSelectedCellRight);
-            }
+            //if (gridId == leftGrid) {
+            //    jQuery(gridId).jqGrid("saveCell", lastSelectedRowLeft, lastSelectedCellLeft);
+            //}
+            //else if (gridId == rightGrid) {
+            //    jQuery(gridId).jqGrid("saveCell", lastSelectedRowRight, lastSelectedCellRight);
+            //}
+            stopEditing();
             data[i] = jQuery(gridId).jqGrid('getRowData', i + 1);
         }
         params.mdata = JSON.stringify(data);
@@ -226,13 +239,33 @@ function transformMatrix(gridId, action) {
         });
 }
 
+function stopEditing() {
+    jQuery(leftGrid).jqGrid("saveCell", lastSelectedRowLeft, lastSelectedCellLeft);
+    jQuery(rightGrid).jqGrid("saveCell", lastSelectedRowRight, lastSelectedCellRight);
+}
+
 function copyMatrixToMatrix(fromGrid, toGrid) {
+    stopEditing();
+
     for (i = 1; i <= matrixRank; i++) {
         var grid = jQuery(fromGrid);
         var row = grid.jqGrid('getRowData', i);
         jQuery(toGrid).setRowData(i, row);
-
     }
+
+    $('#confirm-clear').modal('show');
+
+    $('#confirm-clear .btn-ok').on("click", function () {
+        //grid.jqGrid("clearGridData", true);
+
+        for (i = 1; i <= matrixRank; i++) {
+            for (j = 0; j < matrixRank; j++) {
+                jQuery(fromGrid).jqGrid('setCell', i, j, " ");
+            }
+        }
+
+        $('#confirm-clear').modal('hide');
+    });
 }
 
 

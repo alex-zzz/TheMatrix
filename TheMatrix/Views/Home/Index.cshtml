@@ -62,7 +62,7 @@
             <button type="button" class="btn btn-primary btn-block" id="addMatrices"><strong>+</strong></button>
         </p>
         <p>
-            <button type="button" class="btn btn-primary btn-block" id="substructMatrices"><strong>-</strong></button>
+            <button type="button" class="btn btn-primary btn-block" id="subtructMatrices"><strong>-</strong></button>
         </p>
         <p>
             <button type="button" class="btn btn-primary btn-block" id="multiplyMatrices"><strong>*</strong></button>
@@ -153,16 +153,32 @@
         <div id="jqGridResult_container">
             <table id="jqGridResult"></table>
         </div>
-        <button type="button" class="btn btn-default pull-left">
+        <button type="button" class="btn btn-default pull-left" id="resultMatrixToLeft">
             <strong>A</strong>
             <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-default pull-right">
+        <button type="button" class="btn btn-default pull-right" id="resultMatrixToRight">
             <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
             <strong>B</strong>
         </button>
     </div>
     <div class="col-md-4">
+    </div>
+</div>
+<div class="modal fade" id="confirm-clear" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                ...
+            </div>*@
+            <div class="modal-body">
+                Do you want to clear source Matrix?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary btn-ok">Clear</a>
+            </div>
+        </div>
     </div>
 </div>
 @Html.Hidden("baseURL", "Home/")

@@ -139,11 +139,16 @@ namespace TheMatrix.Controllers
             };
         }
 
-        public ActionResult MultByMatrix(string mdata, double factor)
+        public ActionResult MultByMatrix(string mdata, double? factor)
         {
+            if (factor == null)
+            {
+                return Json(new { success = false, responseData = "Incorrect factor!" }, JsonRequestBehavior.AllowGet);
+            }
+
             try
             {
-                return GetJSon(Service.MultBy(GetMatrixFromData(mdata), factor));
+                return GetJSon(Service.MultBy(GetMatrixFromData(mdata), (double)factor));
             }
             catch
             {

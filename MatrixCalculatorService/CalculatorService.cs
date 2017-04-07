@@ -57,7 +57,7 @@ namespace MatrixCalculatorService
 
         public Matrix Subtract(Matrix A, Matrix B)
         {
-            return A / B;
+            return A - B;
         }
 
         public Matrix Transposing(Matrix A)

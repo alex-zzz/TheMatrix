@@ -83,7 +83,14 @@ namespace MatrixCalculatorService
                 Bi = B[i, i];
                 for (int j = 0; j < size * 2; j++)
                 {
-                    B[i, j] /= Bi; 
+                    if (Bi == 0)
+                    {
+                        B[i, j] += 1;
+                    }
+                    else
+                    {
+                        B[i, j] /= Bi;
+                    }
                 }
 
                 for (int k = 0; k < size; k++)

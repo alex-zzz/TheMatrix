@@ -42,13 +42,15 @@ $('select.rank').on('change', function () {
 
     setTimeout(function () {
         $(leftGrid).trigger("reloadGrid")
-    }, 1000);
-    setTimeout(function () {
         $(rightGrid).trigger("reloadGrid")
-    }, 1000);
-    setTimeout(function () {
         $(resultGrid).trigger("reloadGrid")
     }, 1000);
+    //setTimeout(function () {
+    //    $(rightGrid).trigger("reloadGrid")
+    //}, 1000);
+    //setTimeout(function () {
+    //    $(resultGrid).trigger("reloadGrid")
+    //}, 1000);
 })
 
 $('#setIdentityLeft').on('click', function () {
@@ -70,23 +72,31 @@ $('#setZeroRight').on('click', function () {
 })
 
 $('#reverseLeft').on('click', function () {
-    //setZero(leftGrid);
     transformMatrix(leftGrid, "ReverseMatrix")
 })
 
 $('#reverseRight').on('click', function () {
-    //setZero(rightGrid);
     transformMatrix(rightGrid, "ReverseMatrix")
 })
 
 $('#transposeLeft').on('click', function () {
-    //setZero(leftGrid);
     transformMatrix(leftGrid, "TransposingMatrix")
 })
 
 $('#transposeRight').on('click', function () {
-    //setZero(rightGrid);
     transformMatrix(rightGrid, "TransposingMatrix")
+})
+
+$('#multiplyByLeft').on('click', function () {
+
+    var factor = $("input[name=factorLeft]").val();
+    muliplyMatrixBy(leftGrid, factor);
+})
+
+$('#multiplyByRight').on('click', function () {
+
+    var factor = $("input[name=factorRight]").val();
+    muliplyMatrixBy(rightGrid, factor);
 })
 
 $('#leftMatrixToRight').on('click', function () {
@@ -143,9 +153,9 @@ $('#divideMatrices').on('click', function () {
 
 function renderGrid(gridId, editable) {
 
-    var data = [];
     var colNames = [];
     var colModel = [];
+    var data = [];
 
     for (i = 1; i <= matrixRank; i++) {
         colNames.push('c' + i);
@@ -158,7 +168,6 @@ function renderGrid(gridId, editable) {
         colModelItem.editable = true;
         colModelItem.edittype = "text";
         colModelItem.editrules = { number: true };
-        //colModel.push(JSON.stringify(colModelItem));
         colModel.push(colModelItem);
     }
 
@@ -181,17 +190,20 @@ function renderGrid(gridId, editable) {
         width: null,
         shrinkToFit: false,
         gridComplete: function () {
+
             $('.ui-jqgrid-hdiv').hide();
             $('.jqgfirstrow').hide();
 
-            var widthLeft = $('#jqGridLeft_container').width();
-            $('#jqGridLeft').width(widthLeft - 6);
+            $(window).trigger('resize');
 
-            var widthRight = $('#jqGridRight_container').width();
-            $('#jqGridRight').width(widthRight - 6);
+            //var widthLeft = $('#jqGridLeft_container').width();
+            //$('#jqGridLeft').width(widthLeft - 6);
 
-            var widthResult = $('#jqGridResult_container').width();
-            $('#jqGridResult').width(widthResult - 6);
+            //var widthRight = $('#jqGridRight_container').width();
+            //$('#jqGridRight').width(widthRight - 6);
+
+            //var widthResult = $('#jqGridResult_container').width();
+            //$('#jqGridResult').width(widthResult - 6);
         },
         beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
             if (gridId == leftGrid) {
@@ -225,51 +237,74 @@ function transformMatrix(gridId, action) {
 
     params.rank = matrixRank;
 
-    $.ajax(
-        {
-            type: "POST",
-            url: $("#baseURL").val() + action,
-            data: params,
-            //data: { mdata: JSON.stringify(data), rank: matrixRank },
-            dataType: "json",
-            success: function (result) {
+    sendRequest(action, params).success(function (result) {
 
-                if (!result.success) {
-                    alert(result.responseData);
-                    return;
-                }
+        if (!result.success) {
+            alert(result.responseData);
+            return;
+        }
 
-                var array = JSON.parse(result.responseData);
+        var resultArray = JSON.parse(result.responseData);
 
-                for (i = 0; i < matrixRank; i++) {
+        for (i = 0; i < matrixRank; i++) {
 
-                    var rowCells = {};
+            var rowCells = {};
 
-                    for (j = 0; j < matrixRank; j++) {
-                        //rowCells['c' + (j + 1)] = array[i][j].toFixed(3);
-                        rowCells['c' + (j + 1)] = array[i][j];
-                    }
-
-                    var t = jQuery(gridId).jqGrid('setRowData', i + 1, rowCells);
-                }
-            },
-            error: function (x, e) {
-                alert(x.readyState + " " + x.status + " " + e.msg);
+            for (j = 0; j < matrixRank; j++) {
+                //rowCells['c' + (j + 1)] = array[i][j].toFixed(3);
+                rowCells['c' + (j + 1)] = resultArray[i][j];
             }
-        });
-}
 
+            jQuery(gridId).jqGrid('setRowData', i + 1, rowCells);
+        }
+    }).error(function (x, e) {
+        alert(x.readyState + " " + x.status + " " + e.msg);
+    });
+
+    //$.ajax(
+    //    {
+    //        type: "POST",
+    //        url: $("#baseURL").val() + action,
+    //        data: params,
+    //        //data: { mdata: JSON.stringify(data), rank: matrixRank },
+    //        dataType: "json",
+    //        success: function (result) {
+
+    //            if (!result.success) {
+    //                alert(result.responseData);
+    //                return;
+    //            }
+
+    //            var array = JSON.parse(result.responseData);
+
+    //            for (i = 0; i < matrixRank; i++) {
+
+    //                var rowCells = {};
+
+    //                for (j = 0; j < matrixRank; j++) {
+    //                    //rowCells['c' + (j + 1)] = array[i][j].toFixed(3);
+    //                    rowCells['c' + (j + 1)] = array[i][j];
+    //                }
+
+    //                var t = jQuery(gridId).jqGrid('setRowData', i + 1, rowCells);
+    //            }
+    //        },
+    //        error: function (x, e) {
+    //            alert(x.readyState + " " + x.status + " " + e.msg);
+    //        }
+    //    });
+}
 
 var sourceMatrix;
 
 function copyMatrixToMatrix(fromGrid, toGrid) {
+
     stopEditing();
 
     sourceMatrix = fromGrid;
 
     for (i = 1; i <= matrixRank; i++) {
-        var grid = jQuery(fromGrid);
-        var row = grid.jqGrid('getRowData', i);
+        var row = jQuery(fromGrid).jqGrid('getRowData', i);
         jQuery(toGrid).setRowData(i, row);
     }
 
@@ -289,64 +324,141 @@ function copyMatrixToMatrix(fromGrid, toGrid) {
 }
 
 function swapMatrices() {
+
     stopEditing();
 
-
+    for (i = 1; i <= matrixRank; i++) {
+        var rowLeft = jQuery(leftGrid).jqGrid('getRowData', i);
+        var rowRight = jQuery(rightGrid).jqGrid('getRowData', i);
+        jQuery(leftGrid).setRowData(i, rowRight);
+        jQuery(rightGrid).setRowData(i, rowLeft);
+    }
 }
 
 function calculateMatrices(action) {
 
+    stopEditing();
+
     var params = {};
 
-    stopEditing();
-    var dataa = {};
-
+    var dataLeftMatrix = {};
     for (i = 0; i < matrixRank; i++) {
-        dataa[i] = jQuery(leftGrid).jqGrid('getRowData', i + 1);
+        dataLeftMatrix[i] = jQuery(leftGrid).jqGrid('getRowData', i + 1);
     }
-    params.mdataa = JSON.stringify(dataa);
+    params.mdataa = JSON.stringify(dataLeftMatrix);
 
-    var datab = {};
-
+    var dataRightMatrix = {};
     for (i = 0; i < matrixRank; i++) {
 
-        datab[i] = jQuery(rightGrid).jqGrid('getRowData', i + 1);
+        dataRightMatrix[i] = jQuery(rightGrid).jqGrid('getRowData', i + 1);
     }
-    params.mdatab = JSON.stringify(datab);
+    params.mdatab = JSON.stringify(dataRightMatrix);
 
     params.rank = matrixRank;
 
-    $.ajax(
+    sendRequest(action, params).success(function (result) {
+
+        if (!result.success) {
+            alert(result.responseData);
+            return;
+        }
+
+        var resultArray = JSON.parse(result.responseData);
+
+        for (i = 0; i < matrixRank; i++) {
+
+            var rowCells = {};
+
+            for (j = 0; j < matrixRank; j++) {
+                rowCells['c' + (j + 1)] = resultArray[i][j];
+            }
+
+            var t = jQuery(resultGrid).jqGrid('setRowData', i + 1, rowCells);
+        }
+    }).error(function (x, e) {
+        alert(x.readyState + " " + x.status + " " + e.msg);
+    });
+
+    //$.ajax(
+    //    {
+    //        type: "POST",
+    //        url: $("#baseURL").val() + action,
+    //        data: params,
+    //        dataType: "json",
+    //        success: function (result) {
+
+    //            if (!result.success) {
+    //                alert(result.responseData);
+    //                return;
+    //            }
+
+    //            var array = JSON.parse(result.responseData);
+
+    //            for (i = 0; i < matrixRank; i++) {
+
+    //                var rowCells = {};
+
+    //                for (j = 0; j < matrixRank; j++) {
+    //                    rowCells['c' + (j + 1)] = array[i][j];
+    //                }
+
+    //                var t = jQuery(resultGrid).jqGrid('setRowData', i + 1, rowCells);
+    //            }
+    //        },
+    //        error: function (x, e) {
+    //            alert(x.readyState + " " + x.status + " " + e.msg);
+    //        }
+    //    });
+}
+
+function muliplyMatrixBy(gridId, factor) {
+
+    var params = {};
+
+    var data = {};
+    for (i = 0; i < matrixRank; i++) {
+        stopEditing();
+        data[i] = jQuery(gridId).jqGrid('getRowData', i + 1);
+    }
+    params.mdata = JSON.stringify(data);
+
+    params.factor = factor;
+
+    params.rank = matrixRank;
+
+    sendRequest("MultByMatrix", params).success(function (result) {
+
+        if (!result.success) {
+            alert(result.responseData);
+            return;
+        }
+
+        var resultArray = JSON.parse(result.responseData);
+
+        for (i = 0; i < matrixRank; i++) {
+
+            var rowCells = {};
+
+            for (j = 0; j < matrixRank; j++) {
+                rowCells['c' + (j + 1)] = resultArray[i][j];
+            }
+
+            jQuery(resultGrid).jqGrid('setRowData', i + 1, rowCells);
+        }
+    }).error(function (x, e) {
+        alert(x.readyState + " " + x.status + " " + e.msg);
+    });
+}
+
+function sendRequest(action, params) {
+
+    return $.ajax(
         {
             type: "POST",
             url: $("#baseURL").val() + action,
             data: params,
             dataType: "json",
-            success: function (result) {
-
-                if (!result.success) {
-                    alert(result.responseData);
-                    return;
-                }
-
-                var array = JSON.parse(result.responseData);
-
-                for (i = 0; i < matrixRank; i++) {
-
-                    var rowCells = {};
-
-                    for (j = 0; j < matrixRank; j++) {
-                        rowCells['c' + (j + 1)] = array[i][j];
-                    }
-
-                    var t = jQuery(resultGrid).jqGrid('setRowData', i + 1, rowCells);
-                }
-            },
-            error: function (x, e) {
-                alert(x.readyState + " " + x.status + " " + e.msg);
-            }
         });
-
 }
 
 function stopEditing() {

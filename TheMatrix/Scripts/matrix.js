@@ -29,7 +29,7 @@ $('select.rank').on('change', function () {
     matrixRank = this.value;
 
     $('select.rank').each(function () {
-        $(this).val(matrixRank)
+        $(this).val(matrixRank);
     });
 
     $(leftGrid).GridUnload();
@@ -41,99 +41,93 @@ $('select.rank').on('change', function () {
     renderGrid(resultGrid, false);
 
     setTimeout(function () {
-        $(leftGrid).trigger("reloadGrid")
-        $(rightGrid).trigger("reloadGrid")
-        $(resultGrid).trigger("reloadGrid")
+        $(leftGrid).trigger("reloadGrid");
+        $(rightGrid).trigger("reloadGrid");
+        $(resultGrid).trigger("reloadGrid");
     }, 1000);
-    //setTimeout(function () {
-    //    $(rightGrid).trigger("reloadGrid")
-    //}, 1000);
-    //setTimeout(function () {
-    //    $(resultGrid).trigger("reloadGrid")
-    //}, 1000);
-})
+});
 
 $('#setIdentityLeft').on('click', function () {
-    transformMatrix(leftGrid, "GetIdentityMatrix")
-})
+    transformMatrix(leftGrid, "GetIdentityMatrix");
+});
 
 $('#setIdentityRight').on('click', function () {
-    transformMatrix(rightGrid, "GetIdentityMatrix")
-})
+    transformMatrix(rightGrid, "GetIdentityMatrix");
+});
 
 $('#setZeroLeft').on('click', function () {
     //setZero(leftGrid);
-    transformMatrix(leftGrid, "GetZeroMatrix")
-})
+    transformMatrix(leftGrid, "GetZeroMatrix");
+});
 
 $('#setZeroRight').on('click', function () {
     //setZero(rightGrid);
-    transformMatrix(rightGrid, "GetZeroMatrix")
-})
+    transformMatrix(rightGrid, "GetZeroMatrix");
+});
 
 $('#reverseLeft').on('click', function () {
-    transformMatrix(leftGrid, "ReverseMatrix")
-})
+    transformMatrix(leftGrid, "ReverseMatrix");
+});
 
 $('#reverseRight').on('click', function () {
-    transformMatrix(rightGrid, "ReverseMatrix")
-})
+    transformMatrix(rightGrid, "ReverseMatrix");
+});
 
 $('#transposeLeft').on('click', function () {
-    transformMatrix(leftGrid, "TransposingMatrix")
-})
+    transformMatrix(leftGrid, "TransposingMatrix");
+});
 
 $('#transposeRight').on('click', function () {
-    transformMatrix(rightGrid, "TransposingMatrix")
-})
+    transformMatrix(rightGrid, "TransposingMatrix");
+});
 
 $('#multiplyByLeft').on('click', function () {
 
     var factor = $("input[name=factorLeft]").val();
     muliplyMatrixBy(leftGrid, factor);
-})
+});
 
 $('#multiplyByRight').on('click', function () {
 
     var factor = $("input[name=factorRight]").val();
     muliplyMatrixBy(rightGrid, factor);
-})
+});
 
 $('#leftMatrixToRight').on('click', function () {
-    copyMatrixToMatrix(leftGrid, rightGrid)
-})
+    copyMatrixToMatrix(leftGrid, rightGrid);
+});
 
 $('#rightMatrixToLeft').on('click', function () {
-    copyMatrixToMatrix(rightGrid, leftGrid)
-})
+    copyMatrixToMatrix(rightGrid, leftGrid);
+});
 
 $('#resultMatrixToRight').on('click', function () {
-    copyMatrixToMatrix(resultGrid, rightGrid)
-})
+    copyMatrixToMatrix(resultGrid, rightGrid);
+});
 
 $('#resultMatrixToLeft').on('click', function () {
-    copyMatrixToMatrix(resultGrid, leftGrid)
-})
+    copyMatrixToMatrix(resultGrid, leftGrid);
+});
 
 $('#swapMatrices').on('click', function () {
-    swapMatrices()
-})
+    swapMatrices();
+});
 
 $('#addMatrices').on('click', function () {
-    calculateMatrices("AddMatrix")
-})
+    calculateMatrices("AddMatrix");
+});
 
 $('#subtractMatrices').on('click', function () {
-    calculateMatrices("SubtractMatrix")
-})
+    calculateMatrices("SubtractMatrix");
+});
 
 $('#multiplyMatrices').on('click', function () {
-    calculateMatrices("MultMatrix")
-})
+    calculateMatrices("MultMatrix");
+});
 
 $('#divideMatrices').on('click', function () {
-    calculateMatrices("DivideMatrix")
-})
+    calculateMatrices("DivideMatrix");
+});
 
 //function setZero(gridId) {
 
@@ -195,15 +189,6 @@ function renderGrid(gridId, editable) {
             $('.jqgfirstrow').hide();
 
             $(window).trigger('resize');
-
-            //var widthLeft = $('#jqGridLeft_container').width();
-            //$('#jqGridLeft').width(widthLeft - 6);
-
-            //var widthRight = $('#jqGridRight_container').width();
-            //$('#jqGridRight').width(widthRight - 6);
-
-            //var widthResult = $('#jqGridResult_container').width();
-            //$('#jqGridResult').width(widthResult - 6);
         },
         beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
             if (gridId == leftGrid) {
@@ -215,12 +200,12 @@ function renderGrid(gridId, editable) {
                 lastSelectedCellRight = iCol;
             }
         }
-    })
+    });
 
     for (var i = 0; i < matrixRank; i++) {
         jQuery(gridId).jqGrid('addRowData', i + 1, data[i]);
     }
-};
+}
 
 function transformMatrix(gridId, action) {
 
@@ -260,39 +245,6 @@ function transformMatrix(gridId, action) {
     }).error(function (x, e) {
         alert(x.readyState + " " + x.status + " " + e.msg);
     });
-
-    //$.ajax(
-    //    {
-    //        type: "POST",
-    //        url: $("#baseURL").val() + action,
-    //        data: params,
-    //        //data: { mdata: JSON.stringify(data), rank: matrixRank },
-    //        dataType: "json",
-    //        success: function (result) {
-
-    //            if (!result.success) {
-    //                alert(result.responseData);
-    //                return;
-    //            }
-
-    //            var array = JSON.parse(result.responseData);
-
-    //            for (i = 0; i < matrixRank; i++) {
-
-    //                var rowCells = {};
-
-    //                for (j = 0; j < matrixRank; j++) {
-    //                    //rowCells['c' + (j + 1)] = array[i][j].toFixed(3);
-    //                    rowCells['c' + (j + 1)] = array[i][j];
-    //                }
-
-    //                var t = jQuery(gridId).jqGrid('setRowData', i + 1, rowCells);
-    //            }
-    //        },
-    //        error: function (x, e) {
-    //            alert(x.readyState + " " + x.status + " " + e.msg);
-    //        }
-    //    });
 }
 
 var sourceMatrix;
@@ -378,37 +330,6 @@ function calculateMatrices(action) {
     }).error(function (x, e) {
         alert(x.readyState + " " + x.status + " " + e.msg);
     });
-
-    //$.ajax(
-    //    {
-    //        type: "POST",
-    //        url: $("#baseURL").val() + action,
-    //        data: params,
-    //        dataType: "json",
-    //        success: function (result) {
-
-    //            if (!result.success) {
-    //                alert(result.responseData);
-    //                return;
-    //            }
-
-    //            var array = JSON.parse(result.responseData);
-
-    //            for (i = 0; i < matrixRank; i++) {
-
-    //                var rowCells = {};
-
-    //                for (j = 0; j < matrixRank; j++) {
-    //                    rowCells['c' + (j + 1)] = array[i][j];
-    //                }
-
-    //                var t = jQuery(resultGrid).jqGrid('setRowData', i + 1, rowCells);
-    //            }
-    //        },
-    //        error: function (x, e) {
-    //            alert(x.readyState + " " + x.status + " " + e.msg);
-    //        }
-    //    });
 }
 
 function muliplyMatrixBy(gridId, factor) {
@@ -457,7 +378,7 @@ function sendRequest(action, params) {
             type: "POST",
             url: $("#baseURL").val() + action,
             data: params,
-            dataType: "json",
+            dataType: "json"
         });
 }
 
